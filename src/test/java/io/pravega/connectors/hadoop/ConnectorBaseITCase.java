@@ -13,12 +13,25 @@ package io.pravega.connectors.hadoop;
 import io.pravega.connectors.hadoop.utils.SetupUtils;
 import org.apache.hadoop.conf.Configuration;
 
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.contrib.java.lang.system.EnvironmentVariables;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Base64;
 
 public abstract class ConnectorBaseITCase {
+
+    @Rule
+    public final EnvironmentVariables environmentVariables = new EnvironmentVariables();
+
+    @Before
+    public void initialize() {
+        environmentVariables.set("pravega_client_auth_method", "true");
+        environmentVariables.set("pravega_client_auth_token", SetupUtils.defaultAuthToken());
+    }
 
     public void addSecurityConfiguration(Configuration conf, SetupUtils setupUtils) throws IOException {
 
