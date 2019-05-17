@@ -29,15 +29,15 @@ public abstract class ConnectorBaseITCase {
 
     @Before
     public void initialize() {
-        environmentVariables.set("pravega_client_auth_method", "true");
+        environmentVariables.set("pravega_client_auth_method", "basic");
         environmentVariables.set("pravega_client_auth_token", SetupUtils.defaultAuthToken());
     }
 
     public void addSecurityConfiguration(Configuration conf, SetupUtils setupUtils) throws IOException {
 
         if (setupUtils.isEnableAuth()) {
-            conf.set("pravega_client_auth_method", "Default");
-            conf.set("pravega_client_auth_token", SetupUtils.defaultAuthToken());
+            conf.set("pravega.client.auth.method", "basic");
+            conf.set("pravega.client.auth.token", SetupUtils.defaultAuthToken());
         }
 
         if (setupUtils.isEnableTls()) {
